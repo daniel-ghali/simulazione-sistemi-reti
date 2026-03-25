@@ -7,81 +7,97 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --secondary: #1e293b;
-            --bg-body: #f8fafc;
-            --bg-card: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --radius: 12px;
-            --indigo-50: #eef2ff;
-            --indigo-100: #e0e7ff;
-            --indigo-600: #4f46e5;
-            --slate-50: #f8fafc;
-            --slate-100: #f1f5f9;
-            --slate-900: #0f172a;
+            --primary: #00f2ff;
+            --primary-hover: #00dae6;
+            --primary-glow: rgba(0, 242, 255, 0.4);
+            --secondary: #bd00ff;
+            --secondary-hover: #a600e0;
+            --secondary-glow: rgba(189, 0, 255, 0.4);
+            --accent: #39ff14;
+            --accent-glow: rgba(57, 255, 20, 0.4);
+            --bg-body: #0a0c10;
+            --bg-card: rgba(23, 27, 34, 0.85);
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+            --border-hover: rgba(0, 242, 255, 0.4);
+            --radius: 16px;
+            --shadow-neon: 0 0 15px var(--primary-glow);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) transparent;
+        }
+
+        html, body {
+            background-color: var(--bg-body) !important;
+            color: var(--text-main) !important;
         }
 
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(189, 0, 255, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 242, 255, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
             line-height: 1.6;
-            padding: 2rem 1rem;
+            padding: 1.5rem 1rem;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
+            width: 100%;
         }
 
         header {
             text-align: center;
-            margin-bottom: 3rem;
-            animation: fadeInDown 0.8s ease-out;
+            margin-bottom: 2.5rem;
+            animation: slideDownFade 1s ease-out;
         }
 
         header h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--indigo-600), #2563eb);
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
         }
 
         header p {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            font-weight: 500;
         }
 
         /* Tabs */
         .tabs-container {
             display: flex;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
+            background: rgba(10, 12, 16, 0.82);
+            backdrop-filter: blur(20px);
             padding: 6px;
             border-radius: 9999px;
             border: 1px solid var(--border);
-            margin-bottom: 2.5rem;
-            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
             position: sticky;
             top: 1rem;
             z-index: 100;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            max-width: fit-content;
+            margin-inline: auto;
         }
 
         .tab {
@@ -89,56 +105,83 @@
             border: none;
             background: transparent;
             color: var(--text-muted);
-            font-weight: 500;
-            font-size: 0.95rem;
+            font-weight: 600;
+            font-size: 0.9rem;
             cursor: pointer;
             border-radius: 9999px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            white-space: nowrap;
         }
 
         .tab:hover {
             color: var(--primary);
+            text-shadow: 0 0 10px var(--primary-glow);
         }
 
         .tab.active {
             background: var(--primary);
-            color: white;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+            color: #000;
+            box-shadow: 0 0 25px var(--primary-glow);
         }
 
         /* Sections */
         .section {
             display: none;
-            animation: fadeIn 0.5s ease-out;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
         }
 
         .section.active {
             display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .card {
             background: var(--bg-card);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 1.5rem;
             margin-bottom: 1.5rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, transparent, rgba(0, 242, 255, 0.03), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
         }
 
         .card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 242, 255, 0.05);
+        }
+
+        .card:hover::before {
+            transform: translateX(100%);
         }
 
         .section-title {
             font-size: 1.5rem;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 1.5rem;
-            color: var(--slate-900);
+            color: #fff;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+            filter: drop-shadow(0 0 8px var(--primary-glow));
         }
 
         /* Storico Tracce */
@@ -146,170 +189,199 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
+            padding: 1rem;
+            border-radius: 12px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            margin-bottom: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .year-card:hover {
+            border-color: var(--border-hover);
         }
 
         .year-header {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 12px;
         }
 
         .year-badge {
-            background: var(--indigo-50);
-            color: var(--indigo-600);
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 0.85rem;
+            background: linear-gradient(135deg, var(--secondary), #7000ff);
+            color: #fff;
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(112, 0, 255, 0.3);
         }
 
         .year-topic {
-            font-weight: 600;
-            font-size: 1.1rem;
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #fff;
+            flex: 1;
         }
 
         .tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
         }
 
         .tag {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             padding: 4px 10px;
-            border-radius: 9999px;
-            font-weight: 500;
+            border-radius: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
         }
 
-        .tag-net    { background: #dcfce7; color: #166534; }
-        .tag-sec    { background: #fee2e2; color: #991b1b; }
-        .tag-proto  { background: #e0f2fe; color: #075985; }
-        .tag-routing{ background: #fef9c3; color: #854d0e; }
-        .tag-crypto { background: #f5f3ff; color: #5b21b6; }
+        .tag-net    { border-color: var(--primary); color: var(--primary); background: rgba(0, 242, 255, 0.05); }
+        .tag-sec    { border-color: var(--secondary); color: var(--secondary); background: rgba(189, 0, 255, 0.05); }
+        .tag-proto  { border-color: var(--accent); color: var(--accent); background: rgba(57, 255, 20, 0.05); }
 
         /* Frequenza */
         .freq-bar-container {
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
         }
 
         .freq-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 4px;
-            font-size: 0.9rem;
-            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #e2e8f0;
         }
 
         .progress-bg {
-            height: 12px;
-            background: var(--slate-100);
+            height: 10px;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 999px;
             overflow: hidden;
-            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary), #6366f1);
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             border-radius: 999px;
             width: 0;
-            transition: width 1s cubic-bezier(0.1, 0, 0.3, 1);
+            transition: width 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+            box-shadow: 0 0 15px var(--primary-glow);
         }
 
         /* Priorities */
         .priority-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
         }
 
         .p-card {
-            border-top: 4px solid #cbd5e1;
+            border-top: 4px solid var(--border);
         }
 
         .p-card.critical { border-top-color: #ef4444; }
         .p-card.high     { border-top-color: #f59e0b; }
-        .p-card.medium   { border-top-color: #3b82f6; }
+        .p-card.medium   { border-top-color: var(--primary); }
 
         .p-label {
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 1rem;
+            letter-spacing: 1.5px;
+            margin-bottom: 1.5rem;
         }
 
         .p-item {
             display: flex;
             justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--slate-100);
-            font-size: 0.9rem;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+            color: #cbd5e1;
         }
 
         .p-item:last-child { border-bottom: none; }
 
         .p-freq {
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
 
         /* Checklist */
         .topic-group {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
         .group-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--primary);
             text-transform: uppercase;
-            border-bottom: 2px solid var(--indigo-50);
-            padding-bottom: 8px;
-            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            border-left: 3px solid var(--primary);
+            padding-left: 12px;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px var(--primary-glow);
         }
 
         .checklist-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 10px 12px;
-            border-radius: 8px;
-            transition: background 0.2s;
+            gap: 15px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid transparent;
+            margin-bottom: 8px;
+            cursor: pointer;
         }
 
         .checklist-item:hover {
-            background: var(--slate-50);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border);
+            transform: translateX(5px);
         }
 
         .checkbox {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             border: 2px solid var(--border);
-            border-radius: 6px;
-            cursor: pointer;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            flex-shrink: 0;
         }
 
         .checkbox.checked {
             background: var(--primary);
             border-color: var(--primary);
-            color: white;
+            box-shadow: 0 0 15px var(--primary-glow);
+            color: #000;
         }
 
         .checkbox.checked::after {
             content: '✓';
-            font-size: 12px;
-            font-weight: bold;
+            font-weight: 900;
+            font-size: 14px;
         }
 
         /* Resources Section */
         .resource-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
         }
 
@@ -319,18 +391,31 @@
             gap: 12px;
             text-decoration: none;
             color: inherit;
+            background: var(--bg-glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.4s;
+        }
+
+        .resource-card:hover {
+            border-color: var(--primary);
+            background: rgba(0, 242, 255, 0.05);
+            transform: scale(1.02);
         }
 
         .resource-type {
             font-size: 0.7rem;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
             color: var(--primary);
+            letter-spacing: 1px;
         }
 
         .resource-name {
-            font-weight: 600;
-            font-size: 1.1rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #fff;
         }
 
         .resource-desc {
@@ -340,25 +425,24 @@
 
         /* Buttons */
         .btn-action {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--indigo-50);
-            color: var(--indigo-600);
+            background: linear-gradient(135deg, var(--primary), #00d4ff);
+            color: #000;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 1rem;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 10px 20px rgba(0, 242, 255, 0.2);
             text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
         }
 
         .btn-action:hover {
-            background: var(--indigo-100);
-            transform: scale(1.02);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 242, 255, 0.4), 0 0 20px var(--primary-glow);
         }
 
         /* Animations */
@@ -367,40 +451,53 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
+        @keyframes slideDownFade {
+            from { opacity: 0; transform: translateY(-30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .tip-box {
-            background: #fffbeb;
-            border-left: 4px solid #f59e0b;
-            padding: 1rem;
-            border-radius: 0 8px 8px 0;
-            margin: 1.5rem 0;
+            background: rgba(255, 243, 201, 0.03);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 0 16px 16px 0;
+            margin: 2rem 0;
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.05);
         }
 
         .tip-title {
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #92400e;
-            margin-bottom: 4px;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .tip-text {
-            font-size: 0.9rem;
-            color: #b45309;
+            font-size: 0.95rem;
+            color: #cbd5e1;
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
             .tabs-container {
-                flex-wrap: wrap;
-                border-radius: 16px;
-                gap: 4px;
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding: 6px;
+                border-radius: 20px;
+                width: calc(100% - 1rem);
             }
             .tab {
-                padding: 8px 16px;
+                padding: 10px 20px;
                 font-size: 0.85rem;
+            }
+            header h1 {
+                font-size: 2.5rem;
+            }
+            .card {
+                padding: 1.5rem;
             }
         }
     </style>
@@ -414,17 +511,16 @@
     </header>
 
     <div class="tabs-container">
-        <button class="tab active" onclick="showTab('storico')">📊 Storico</button>
-        <button class="tab" onclick="showTab('frequenza')">📈 Frequenza</button>
-        <button class="tab" onclick="showTab('priorita')">🎯 Piano Studio</button>
-        <button class="tab" onclick="showTab('checklist')">✅ Checklist</button>
-        <button class="tab" onclick="showTab('risorse')">📚 Risorse</button>
+        <button class="tab active" onclick="showTab('storico', this)"><i class="fa-solid fa-chart-line"></i> Storico</button>
+        <button class="tab" onclick="showTab('frequenza', this)"><i class="fa-solid fa-chart-bar"></i> Frequenza</button>
+        <button class="tab" onclick="showTab('priorita', this)"><i class="fa-solid fa-bullseye"></i> Piano Studio</button>
+        <button class="tab" onclick="showTab('checklist', this)"><i class="fa-solid fa-list-check"></i> Checklist</button>
+        <button class="tab" onclick="showTab('risorse', this)"><i class="fa-solid fa-book"></i> Risorse</button>
     </div>
 
-    <!-- SECTION: STORICO -->
     <div id="storico" class="section active">
         <div class="card">
-            <h2 class="section-title">📅 Analisi tracce ministeriali (2014-2024)</h2>
+            <h2 class="section-title"><i class="fa-solid fa-calendar-days"></i> Analisi tracce ministeriali (2014-2024)</h2>
             <div id="storico-content">
                 <!-- Content will be injected by JS -->
             </div>
@@ -434,14 +530,14 @@
     <!-- SECTION: FREQUENZA -->
     <div id="frequenza" class="section">
         <div class="card">
-            <h2 class="section-title">📊 Argomenti più frequenti</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Frequenza di apparizione nelle tracce degli ultimi 10 anni.</p>
+            <h2 class="section-title"><i class="fa-solid fa-chart-pie"></i> Argomenti più frequenti</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Frequenza di apparizione nelle tracce degli ultimi 10 anni.</p>
             <div id="freq-content">
                 <!-- Content will be injected by JS -->
             </div>
         </div>
         <div class="tip-box">
-            <div class="tip-title">Tendenza 2025</div>
+            <div class="tip-title"><i class="fa-solid fa-lightbulb"></i> Tendenza 2025</div>
             <p class="tip-text">Forte focus su Cybersecurity (VPN, SSL, Cloud Security) e progettazione reti complesse (Subnetting /8).</p>
         </div>
     </div>
@@ -462,22 +558,38 @@
                 <div id="p-medium-content"></div>
             </div>
         </div>
-        <div class="card" style="margin-top: 2rem;">
-            <h2 class="section-title">💡 Consigli per la seconda prova</h2>
-            <p>La prova dura 6 ore. È divisa in due parti:</p>
-            <ol style="margin: 1rem 0 1rem 2rem; font-size: 0.95rem;">
-                <li><strong>Parte 1 (Obbligatoria):</strong> Progettazione di una rete su scenario reale. Devi fare Subnetting, schema logico, motivazione della scelta degli apparati e un accenno alla configurazione.</li>
-                <li><strong>Parte 2 (Quesiti):</strong> Scegli 2 quesiti su 4. Spesso riguardano protocolli (HTTP/S, DNS), sicurezza (Firewall, DMZ, VPN) o Packet Tracer.</li>
-            </ol>
-            <button class="btn-action" onclick="alert('Cerca simulazioni d\'esame su Google o chiedi al chatbot!')">Genera Simulazione ↗</button>
+        <div class="card" style="margin-top: 1.5rem; border-left: 4px solid var(--accent); position: relative;">
+            <h2 class="section-title"><i class="fa-solid fa-trophy"></i> Strategie per il 100/100</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Consigli pratici per massimizzare il punteggio della Seconda Prova.</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                <div style="background: rgba(16, 185, 129, 0.05); padding: 1.25rem; border-radius: 12px; border: 1px solid rgba(16, 185, 129, 0.1);">
+                    <h3 style="font-size: 1rem; color: #10b981; margin-bottom: 0.75rem;"><i class="fa-solid fa-compass-drafting"></i> Parte 1: Il Progetto</h3>
+                    <ul style="font-size: 0.85rem; padding-left: 1rem; color: #d1d5db; line-height: 1.5;">
+                        <li style="margin-bottom: 8px;"><strong>Ipotesi Aggiuntive:</strong> Fondamentali. Dichiara sempre il numero di host (es. "50 host per HR").</li>
+                        <li style="margin-bottom: 8px;"><strong>Diagrammi:</strong> Usa icone standard Cisco per Router e Switch. Sii pulito.</li>
+                        <li><strong>Sicurezza:</strong> Spiega sempre la scelta della DMZ e della VPN per il telelavoro.</li>
+                    </ul>
+                </div>
+                <div style="background: rgba(59, 130, 246, 0.05); padding: 1.25rem; border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.1);">
+                    <h3 style="font-size: 1rem; color: #3b82f6; margin-bottom: 0.75rem;"><i class="fa-solid fa-brain"></i> Parte 2: I Quesiti</h3>
+                    <ul style="font-size: 0.85rem; padding-left: 1rem; color: #d1d5db; line-height: 1.5;">
+                        <li style="margin-bottom: 8px;"><strong>Scelta:</strong> Scegli i quesiti dove puoi essere più dettagliato.</li>
+                        <li style="margin-bottom: 8px;"><strong>Precisione:</strong> Per i protocolli (es. DHCP), spiega tutte le fasi (DORA).</li>
+                        <li><strong>CLI:</strong> Ripassa i comandi Cisco (`ip route`, `vlan`, `access-list`).</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-top: 1.5rem; text-align: center;">
+                <button class="btn-action" onclick="alert('Cerca simulazioni d\'esame su Google o chiedi al chatbot!')">Genera Simulazione ↗</button>
+            </div>
         </div>
     </div>
 
     <!-- SECTION: CHECKLIST -->
     <div id="checklist" class="section">
         <div class="card">
-            <h2 class="section-title">✅ Road to 100</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Spunta gli argomenti man mano che li comprendi a fondo.</p>
+            <h2 class="section-title"><i class="fa-solid fa-square-check"></i> Road to 100</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Spunta gli argomenti man mano che li comprendi a fondo.</p>
             <div id="checklist-content">
                 <!-- Content will be injected by JS -->
             </div>
@@ -487,7 +599,7 @@
     <!-- SECTION: RISORSE -->
     <div id="risorse" class="section">
         <div class="card">
-            <h2 class="section-title">📚 Migliori Risorse per lo Studio</h2>
+            <h2 class="section-title"><i class="fa-solid fa-rocket"></i> Migliori Risorse per lo Studio</h2>
             <div class="resource-grid" id="resource-content">
                 <!-- Content will be injected by JS -->
             </div>
@@ -541,35 +653,73 @@
     };
 
     const checklistItems = [
-        { label: 'Cosa è il Modello OSI (i 7 livelli)', group: 'Fondamenti' },
-        { label: 'Differenza tra IPv4 e MAC address', group: 'Fondamenti' },
-        { label: 'Calcolare Subnet Mask e range IP', group: 'Networking Pro' },
-        { label: 'Configurare VLSM su scenari complessi', group: 'Networking Pro' },
-        { label: 'Come funziona il processo ARP', group: 'Networking Pro' },
-        { label: 'NAT Statico vs dinamico vs PAT', group: 'Routing & NAT' },
-        { label: 'Configurare il Routing Statico', group: 'Routing & NAT' },
-        { label: 'Handshake a 3 vie di TCP', group: 'Protocolli' },
-        { label: 'DNS: record A, MX e CNAME', group: 'Protocolli' },
-        { label: 'Differenza tra AH ed ESP in IPsec', group: 'Sicurezza' },
-        { label: 'Configurare una DMZ (Interna vs Esterna)', group: 'Sicurezza' },
-        { label: 'Crittografia Asimmetrica (Chiavi Pubblica/Privata)', group: 'Crittografia' }
+        // Modelli e indirizzamento
+        { label: 'Modello OSI: 7 livelli, funzioni e protocolli', group: 'Modelli e Indirizzamento' },
+        { label: 'Modello TCP/IP: confronto con OSI', group: 'Modelli e Indirizzamento' },
+        { label: 'Indirizzi MAC: struttura e ARP', group: 'Modelli e Indirizzamento' },
+        { label: 'IPv4: classi A/B/C, notazione CIDR', group: 'Modelli e Indirizzamento' },
+        { label: 'Subnetting: calcolo subnet mask, network, broadcast, host range', group: 'Modelli e Indirizzamento' },
+        { label: 'VLSM: subnetting a lunghezza variabile', group: 'Modelli e Indirizzamento' },
+        // Protocolli
+        { label: 'Protocollo DHCP: funzionamento, relay agent', group: 'Protocolli' },
+        { label: 'Protocollo DNS: risoluzione nomi, zone, record A/MX/NS', group: 'Protocolli' },
+        { label: 'Email: SMTP, POP3, IMAP4 — differenze e porte', group: 'Protocolli' },
+        { label: 'TCP: handshake, sliding window, controllo errori', group: 'Protocolli' },
+        { label: 'UDP: caratteristiche e casi d\'uso', group: 'Protocolli' },
+        { label: 'HTTP vs HTTPS — porte e differenze', group: 'Protocolli' },
+        // Routing e NAT
+        { label: 'NAT statico, dinamico e PAT', group: 'Routing e NAT' },
+        { label: 'NAT inverso (reverse NAT / port forwarding)', group: 'Routing e NAT' },
+        { label: 'Routing statico: configurazione su router Cisco', group: 'Routing e NAT' },
+        { label: 'Routing dinamico: RIP v1/v2, tabelle di routing', group: 'Routing e NAT' },
+        // Sicurezza e reti avanzate
+        { label: 'VLAN: access port, trunk port, 802.1Q', group: 'Sicurezza e Reti Avanzate' },
+        { label: 'Firewall: packet filter, stateful, regole ACL', group: 'Sicurezza e Reti Avanzate' },
+        { label: 'DMZ: architettura a tre zone', group: 'Sicurezza e Reti Avanzate' },
+        { label: 'VPN: site-to-site vs remote access', group: 'Sicurezza e Reti Avanzate' },
+        { label: 'SSL/TLS: handshake, certificati digitali, CA', group: 'Sicurezza e Reti Avanzate' },
+        { label: 'IPsec: AH, ESP, modalità tunnel/trasporto', group: 'Sicurezza e Reti Avanzate' },
+        { label: 'WiFi: WPA2 Personal vs Enterprise, RADIUS', group: 'Sicurezza e Reti Avanzate' },
+        // Crittografia
+        { label: 'Cifrario di Cesare e Vigenere', group: 'Crittografia' },
+        { label: 'Crittografia simmetrica: AES, chiave condivisa', group: 'Crittografia' },
+        { label: 'Crittografia asimmetrica: RSA, coppia chiavi', group: 'Crittografia' },
+        { label: 'Diffie-Hellman: scambio chiavi', group: 'Crittografia' },
+        { label: 'Algebra modulare: aritmetica mod n', group: 'Crittografia' },
+        // Laboratorio
+        { label: 'Packet Tracer: configurare router, switch, VLAN', group: 'Laboratorio' },
+        { label: 'Packet Tracer: configurare DHCP e DNS su server', group: 'Laboratorio' },
+        { label: 'Packet Tracer: NAT/PAT su router Cisco', group: 'Laboratorio' },
+        { label: 'Packet Tracer: routing statico e RIP', group: 'Laboratorio' },
+        { label: 'Packet Tracer: VPN site-to-site', group: 'Laboratorio' }
     ];
 
     const resourcesData = [
-        { type: 'YouTube', name: 'Informaticacheappassiona', desc: 'Playlist completa dedicata alla maturità di Sistemi e Reti.', link: 'https://www.youtube.com/@informaticacheappassiona' },
-        { type: 'YouTube', name: 'Prof. Bruno Morpurgo', desc: 'Lezioni dettagliate su reti, protocolli e architetture.', link: 'https://www.youtube.com/@brunomorpurgo' },
-        { type: 'Sito Web', name: 'Mauro De Berardis', desc: 'Archivio storico di tutte le prove svolte con soluzioni.', link: 'http://www.maurodeberardis.it/' },
-        { type: 'Sito Web', name: 'Infodoc Scuola', desc: 'Ottime dispense riassuntive su tutti gli argomenti.', link: 'https://www.infodoc.it/scuola/sistemi-e-reti/' },
-        { type: 'Laboratorio', name: 'Cisco Packet Tracer', desc: 'Lo strumento fondamentale per simulare le reti.', link: 'https://www.netacad.com/courses/packet-tracer' }
+        { type: 'Sito Web', name: 'Mauro De Berardis', desc: 'Le migliori soluzioni aggiornate (2024/2026) e dispense di Sistemi e Reti.', link: 'http://www.maurodeberardis.it/' },
+        { type: 'YouTube', name: 'Informatica per tutti', desc: 'Playlist "Maturità Informatica" & playlist per Reti (OSI, Subnetting, TCP).', link: 'https://www.youtube.com/@informaticapertutti' },
+        { type: 'Sito Web', name: 'Simone Zanella', desc: 'Appunti eccellenti e simulazioni della seconda prova (anche 2024).', link: 'https://www.simonezanella.it/' },
+        { type: 'YouTube', name: 'Informaticacheappassiona', desc: 'Video lezioni focalizzate su protocolli e crittografia per la maturità.', link: 'https://www.youtube.com/@informaticacheappassiona' },
+        { type: 'Laboratorio', name: 'Cisco Networking Academy', desc: 'Scarica Cisco Packet Tracer e segui i corsi ufficiali gratuiti.', link: 'https://www.netacad.com/courses/packet-tracer' },
+        { type: 'Sito Web', name: 'Simone.it (Bignami)', desc: 'Manuali rapidi e mappe concettuali per il ripasso dell\'ultimo minuto.', link: 'https://www.simone.it/catalogo/v530_3.htm' }
     ];
 
     // INITIALIZATION & TAB LOGIC
-    function showTab(id) {
+    function showTab(id, btn) {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.section').forEach(s => {
+            s.classList.remove('active');
+            s.style.display = 'none';
+        });
         
-        event.target.classList.add('active');
-        document.getElementById(id).classList.add('active');
+        btn.classList.add('active');
+        const nextSec = document.getElementById(id);
+        if(!nextSec) return;
+        
+        nextSec.style.display = 'block';
+        setTimeout(() => {
+            nextSec.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 10);
 
         if(id === 'frequenza') animateBars();
     }
@@ -628,7 +778,10 @@
         // Checklist
         const checkCont = document.getElementById('checklist-content');
         const groups = [...new Set(checklistItems.map(i => i.group))];
-        const saved = JSON.parse(localStorage.getItem('sr-checks-v2') || '{}');
+        let saved = {};
+        try {
+            saved = JSON.parse(localStorage.getItem('sr-checks-v2') || '{}');
+        } catch(e) { console.warn("LocalStorage blocked:", e); }
 
         groups.forEach(g => {
             const gDiv = document.createElement('div');
@@ -665,9 +818,11 @@
     }
 
     function toggleCheck(label, el) {
-        const saved = JSON.parse(localStorage.getItem('sr-checks-v2') || '{}');
-        saved[label] = !saved[label];
-        localStorage.setItem('sr-checks-v2', JSON.stringify(saved));
+        try {
+            const saved = JSON.parse(localStorage.getItem('sr-checks-v2') || '{}');
+            saved[label] = !saved[label];
+            localStorage.setItem('sr-checks-v2', JSON.stringify(saved));
+        } catch(e) { console.warn("LocalStorage blocked:", e); }
         el.classList.toggle('checked');
     }
 
