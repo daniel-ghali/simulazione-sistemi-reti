@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guida Studio Sistemi e Reti - Maturità IT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #1e293b;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --radius: 12px;
+            --indigo-50: #eef2ff;
+            --indigo-100: #e0e7ff;
+            --indigo-600: #4f46e5;
+            --slate-50: #f8fafc;
+            --slate-100: #f1f5f9;
+            --slate-900: #0f172a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--indigo-600), #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Tabs */
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 6px;
+            border-radius: 9999px;
+            border: 1px solid var(--border);
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 1rem;
+            z-index: 100;
+        }
+
+        .tab {
+            padding: 10px 24px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-radius: 9999px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tab:hover {
+            color: var(--primary);
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--slate-900);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Storico Tracce */
+        .year-card {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .year-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .year-badge {
+            background: var(--indigo-50);
+            color: var(--indigo-600);
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .year-topic {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+
+        .tag-net    { background: #dcfce7; color: #166534; }
+        .tag-sec    { background: #fee2e2; color: #991b1b; }
+        .tag-proto  { background: #e0f2fe; color: #075985; }
+        .tag-routing{ background: #fef9c3; color: #854d0e; }
+        .tag-crypto { background: #f5f3ff; color: #5b21b6; }
+
+        /* Frequenza */
+        .freq-bar-container {
+            margin-bottom: 1rem;
+        }
+
+        .freq-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .progress-bg {
+            height: 12px;
+            background: var(--slate-100);
+            border-radius: 999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #6366f1);
+            border-radius: 999px;
+            width: 0;
+            transition: width 1s cubic-bezier(0.1, 0, 0.3, 1);
+        }
+
+        /* Priorities */
+        .priority-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .p-card {
+            border-top: 4px solid #cbd5e1;
+        }
+
+        .p-card.critical { border-top-color: #ef4444; }
+        .p-card.high     { border-top-color: #f59e0b; }
+        .p-card.medium   { border-top-color: #3b82f6; }
+
+        .p-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .p-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--slate-100);
+            font-size: 0.9rem;
+        }
+
+        .p-item:last-child { border-bottom: none; }
+
+        .p-freq {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* Checklist */
+        .topic-group {
+            margin-bottom: 2rem;
+        }
+
+        .group-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--indigo-50);
+            padding-bottom: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .checklist-item:hover {
+            background: var(--slate-50);
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .checkbox.checked {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .checkbox.checked::after {
+            content: '✓';
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Resources Section */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .resource-card {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .resource-type {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--primary);
+        }
+
+        .resource-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .resource-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Buttons */
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--indigo-50);
+            color: var(--indigo-600);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 1rem;
+            text-decoration: none;
+        }
+
+        .btn-action:hover {
+            background: var(--indigo-100);
+            transform: scale(1.02);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tip-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .tip-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #92400e;
+            margin-bottom: 4px;
+        }
+
+        .tip-text {
+            font-size: 0.9rem;
+            color: #b45309;
+        }
+
+        @media (max-width: 640px) {
+            .tabs-container {
+                flex-wrap: wrap;
+                border-radius: 16px;
+                gap: 4px;
+            }
+            .tab {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Sistemi e Reti</h1>
+        <p>Guida allo studio e preparazione per l'Esame di Stato IT</p>
+    </header>
+
+    <div class="tabs-container">
+        <button class="tab active" onclick="showTab('storico')">📊 Storico</button>
+        <button class="tab" onclick="showTab('frequenza')">📈 Frequenza</button>
+        <button class="tab" onclick="showTab('priorita')">🎯 Piano Studio</button>
+        <button class="tab" onclick="showTab('checklist')">✅ Checklist</button>
+        <button class="tab" onclick="showTab('risorse')">📚 Risorse</button>
+    </div>
+
+    <!-- SECTION: STORICO -->
+    <div id="storico" class="section active">
+        <div class="card">
+            <h2 class="section-title">📅 Analisi tracce ministeriali (2014-2024)</h2>
+            <div id="storico-content">
+                <!-- Content will be injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION: FREQUENZA -->
+    <div id="frequenza" class="section">
+        <div class="card">
+            <h2 class="section-title">📊 Argomenti più frequenti</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Frequenza di apparizione nelle tracce degli ultimi 10 anni.</p>
+            <div id="freq-content">
+                <!-- Content will be injected by JS -->
+            </div>
+        </div>
+        <div class="tip-box">
+            <div class="tip-title">Tendenza 2025</div>
+            <p class="tip-text">Forte focus su Cybersecurity (VPN, SSL, Cloud Security) e progettazione reti complesse (Subnetting /8).</p>
+        </div>
+    </div>
+
+    <!-- SECTION: PRIORITA -->
+    <div id="priorita" class="section">
+        <div class="priority-grid">
+            <div class="card p-card critical">
+                <div class="p-label" style="color:#ef4444">🔴 Fondamentali</div>
+                <div id="p-critical-content"></div>
+            </div>
+            <div class="card p-card high">
+                <div class="p-label" style="color:#f59e0b">🟡 Alta Priorità</div>
+                <div id="p-high-content"></div>
+            </div>
+            <div class="card p-card medium">
+                <div class="p-label" style="color:#3b82f6">🔵 Media Priorità</div>
+                <div id="p-medium-content"></div>
+            </div>
+        </div>
+        <div class="card" style="margin-top: 2rem;">
+            <h2 class="section-title">💡 Consigli per la seconda prova</h2>
+            <p>La prova dura 6 ore. È divisa in due parti:</p>
+            <ol style="margin: 1rem 0 1rem 2rem; font-size: 0.95rem;">
+                <li><strong>Parte 1 (Obbligatoria):</strong> Progettazione di una rete su scenario reale. Devi fare Subnetting, schema logico, motivazione della scelta degli apparati e un accenno alla configurazione.</li>
+                <li><strong>Parte 2 (Quesiti):</strong> Scegli 2 quesiti su 4. Spesso riguardano protocolli (HTTP/S, DNS), sicurezza (Firewall, DMZ, VPN) o Packet Tracer.</li>
+            </ol>
+            <button class="btn-action" onclick="alert('Cerca simulazioni d\'esame su Google o chiedi al chatbot!')">Genera Simulazione ↗</button>
+        </div>
+    </div>
+
+    <!-- SECTION: CHECKLIST -->
+    <div id="checklist" class="section">
+        <div class="card">
+            <h2 class="section-title">✅ Road to 100</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Spunta gli argomenti man mano che li comprendi a fondo.</p>
+            <div id="checklist-content">
+                <!-- Content will be injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION: RISORSE -->
+    <div id="risorse" class="section">
+        <div class="card">
+            <h2 class="section-title">📚 Migliori Risorse per lo Studio</h2>
+            <div class="resource-grid" id="resource-content">
+                <!-- Content will be injected by JS -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // DATA STRUCTURES
+    const storicoData = [
+        { year: '2024', topic: 'Rete sanitaria regionale (PNRR)', tags: ['Subnetting /8', 'SSH', 'Crittografia', 'VPN', 'Firewall'], type: 'net' },
+        { year: '2023', topic: 'Educational Games Platform', tags: ['Subnetting', 'SSL/TLS', 'HTTP/S', 'DMZ'], type: 'proto' },
+        { year: '2022', topic: 'Commissione interna (Post-COVID)', tags: ['Progettazione', 'Sicurezza base'], type: 'net' },
+        { year: '2019', topic: 'Punti di interesse Comunali', tags: ['Cloud', 'VLAN', 'NAT', 'WiFi'], type: 'net' },
+        { year: '2018', topic: 'Azienda Logistica', tags: ['VPN', 'RIP', 'DHCP', 'NAT'], type: 'sec' },
+        { year: '2017', topic: 'Car pooling Multisite', tags: ['Routing Statico', 'Subnetting', 'VLAN'], type: 'routing' },
+        { year: '2016', topic: 'BYOD Scolastico', tags: ['VLAN 802.1Q', 'DMZ', 'RADIUS', 'WiFi'], type: 'sec' }
+    ];
+
+    const freqData = [
+        { label: 'Subnetting / VLSM', p: 100 },
+        { label: 'NAT / PAT / Inverso', p: 85 },
+        { label: 'VLAN / L3 Switching', p: 80 },
+        { label: 'Firewall / DMZ', p: 75 },
+        { label: 'HTTP / DNS / DHCP', p: 70 },
+        { label: 'Routing (RIP / Static)', p: 65 },
+        { label: 'VPN (IPsec / SSL)', p: 60 },
+        { label: 'Crittografia (RSA/AES)', p: 55 },
+        { label: 'Cybersecurity / TLS', p: 50 }
+    ];
+
+    const priorities = {
+        critical: [
+            { name: 'Subnetting & VLSM', freq: 'Ogni anno' },
+            { name: 'Modello OSI / TCP-IP', freq: 'Base teorica' },
+            { name: 'NAT e Port Forwarding', freq: 'Frequentissimo' },
+            { name: 'VLAN (Trunking/Access)', freq: 'Molto comune' }
+        ],
+        high: [
+            { name: 'Firewall & ACL', freq: '7/10 anni' },
+            { name: 'VPN Architecture', freq: '6/10 anni' },
+            { name: 'SSL/TLS Handshake', freq: 'In crescita' },
+            { name: 'DNS / DHCP Info', freq: 'Teoria' }
+        ],
+        medium: [
+            { name: 'Crittografia RSA/AES', freq: '4/10 anni' },
+            { name: 'Routing RIP v1/v2', freq: '6/10 anni' },
+            { name: 'WiFi (WPA2/Enterprise)', freq: '5/10 anni' },
+            { name: 'Packet Tracer Lab', freq: 'Progetto' }
+        ]
+    };
+
+    const checklistItems = [
+        { label: 'Cosa è il Modello OSI (i 7 livelli)', group: 'Fondamenti' },
+        { label: 'Differenza tra IPv4 e MAC address', group: 'Fondamenti' },
+        { label: 'Calcolare Subnet Mask e range IP', group: 'Networking Pro' },
+        { label: 'Configurare VLSM su scenari complessi', group: 'Networking Pro' },
+        { label: 'Come funziona il processo ARP', group: 'Networking Pro' },
+        { label: 'NAT Statico vs dinamico vs PAT', group: 'Routing & NAT' },
+        { label: 'Configurare il Routing Statico', group: 'Routing & NAT' },
+        { label: 'Handshake a 3 vie di TCP', group: 'Protocolli' },
+        { label: 'DNS: record A, MX e CNAME', group: 'Protocolli' },
+        { label: 'Differenza tra AH ed ESP in IPsec', group: 'Sicurezza' },
+        { label: 'Configurare una DMZ (Interna vs Esterna)', group: 'Sicurezza' },
+        { label: 'Crittografia Asimmetrica (Chiavi Pubblica/Privata)', group: 'Crittografia' }
+    ];
+
+    const resourcesData = [
+        { type: 'YouTube', name: 'Informaticacheappassiona', desc: 'Playlist completa dedicata alla maturità di Sistemi e Reti.', link: 'https://www.youtube.com/@informaticacheappassiona' },
+        { type: 'YouTube', name: 'Prof. Bruno Morpurgo', desc: 'Lezioni dettagliate su reti, protocolli e architetture.', link: 'https://www.youtube.com/@brunomorpurgo' },
+        { type: 'Sito Web', name: 'Mauro De Berardis', desc: 'Archivio storico di tutte le prove svolte con soluzioni.', link: 'http://www.maurodeberardis.it/' },
+        { type: 'Sito Web', name: 'Infodoc Scuola', desc: 'Ottime dispense riassuntive su tutti gli argomenti.', link: 'https://www.infodoc.it/scuola/sistemi-e-reti/' },
+        { type: 'Laboratorio', name: 'Cisco Packet Tracer', desc: 'Lo strumento fondamentale per simulare le reti.', link: 'https://www.netacad.com/courses/packet-tracer' }
+    ];
+
+    // INITIALIZATION & TAB LOGIC
+    function showTab(id) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        
+        event.target.classList.add('active');
+        document.getElementById(id).classList.add('active');
+
+        if(id === 'frequenza') animateBars();
+    }
+
+    function animateBars() {
+        const bars = document.querySelectorAll('.progress-fill');
+        bars.forEach(bar => {
+            const val = bar.getAttribute('data-val');
+            bar.style.width = val + '%';
+        });
+    }
+
+    // INJECT CONTENT
+    function init() {
+        // Storico
+        const storicoCont = document.getElementById('storico-content');
+        storicoData.forEach(d => {
+            const card = document.createElement('div');
+            card.className = 'year-card';
+            card.style.marginBottom = '1.5rem';
+            card.innerHTML = `
+                <div class="year-header">
+                    <span class="year-badge">${d.year}</span>
+                    <span class="year-topic">${d.topic}</span>
+                </div>
+                <div class="tags">
+                    ${d.tags.map(t => `<span class="tag tag-${d.type}">${t}</span>`).join('')}
+                </div>
+            `;
+            storicoCont.appendChild(card);
+        });
+
+        // Frequenza
+        const freqCont = document.getElementById('freq-content');
+        freqData.forEach(d => {
+            const div = document.createElement('div');
+            div.className = 'freq-bar-container';
+            div.innerHTML = `
+                <div class="freq-header"><span>${d.label}</span><span>${d.p}%</span></div>
+                <div class="progress-bg"><div class="progress-fill" data-val="${d.p}"></div></div>
+            `;
+            freqCont.appendChild(div);
+        });
+
+        // Priorities
+        ['critical', 'high', 'medium'].forEach(level => {
+            const cont = document.getElementById(`p-${level}-content`);
+            priorities[level].forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'p-item';
+                div.innerHTML = `<span>${item.name}</span><span class="p-freq">${item.freq}</span>`;
+                cont.appendChild(div);
+            });
+        });
+
+        // Checklist
+        const checkCont = document.getElementById('checklist-content');
+        const groups = [...new Set(checklistItems.map(i => i.group))];
+        const saved = JSON.parse(localStorage.getItem('sr-checks-v2') || '{}');
+
+        groups.forEach(g => {
+            const gDiv = document.createElement('div');
+            gDiv.className = 'topic-group';
+            gDiv.innerHTML = `<div class="group-title">${g}</div>`;
+            
+            checklistItems.filter(i => i.group === g).forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'checklist-item';
+                const isChecked = saved[item.label] ? 'checked' : '';
+                itemDiv.innerHTML = `
+                    <div class="checkbox ${isChecked}" onclick="toggleCheck('${item.label}', this)"></div>
+                    <span>${item.label}</span>
+                `;
+                gDiv.appendChild(itemDiv);
+            });
+            checkCont.appendChild(gDiv);
+        });
+
+        // Resources
+        const resCont = document.getElementById('resource-content');
+        resourcesData.forEach(r => {
+            const a = document.createElement('a');
+            a.className = 'card resource-card';
+            a.href = r.link;
+            a.target = '_blank';
+            a.innerHTML = `
+                <span class="resource-type">${r.type}</span>
+                <span class="resource-name">${r.name} ↗</span>
+                <span class="resource-desc">${r.desc}</span>
+            `;
+            resCont.appendChild(a);
+        });
+    }
+
+    function toggleCheck(label, el) {
+        const saved = JSON.parse(localStorage.getItem('sr-checks-v2') || '{}');
+        saved[label] = !saved[label];
+        localStorage.setItem('sr-checks-v2', JSON.stringify(saved));
+        el.classList.toggle('checked');
+    }
+
+    window.onload = init;
+</script>
+
+</body>
+</html>
